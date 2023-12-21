@@ -66,6 +66,6 @@ std::string string_format_v(const char *format, va_list ap) {
 }
 
 
-std::string replace_extension(const std::filesystem::path& file_name, const std::string& extension) {
+std::filesystem::path replace_extension(const std::filesystem::path& file_name, const std::string& extension) {
     return  file_name.parent_path() / (file_name.stem().string( ) +  "." + extension);
 }
