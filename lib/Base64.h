@@ -32,6 +32,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef BASE64_H
 #define BASE64_H
 
+#include <cstdint>
 #include <ostream>
 
 class Base64Encoder {
