@@ -1,4 +1,5 @@
 add_library(foundation STATIC
+        Base64.cc
         Commandline.cc
         Command.cc
         Exception.cc
