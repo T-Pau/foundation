@@ -32,6 +32,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #ifndef LOCATION_H
 #define LOCATION_H
 
+#include <optional>
 #include <string>
 
 #include "Symbol.h"
