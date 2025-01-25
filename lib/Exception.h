@@ -35,9 +35,8 @@
 */
 
 #include <exception>
+#include <optional>
 #include <string>
-#include <system_error>
-#include <utility>
 
 #include "printf_like.h"
 
@@ -48,7 +47,7 @@ public:
     explicit Exception(const char *format, ...) PRINTF_LIKE(2, 3);
 
     Exception append_detail(const std::string &str);
-    Exception append_system_error(int code = -1); // default: use current errno
+    Exception append_system_error(std::optional<int> code); // default: use current errno
 
     [[nodiscard]] const char* what() const noexcept override;
 

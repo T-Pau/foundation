@@ -46,16 +46,16 @@ Exception::Exception(const char *format, ...) {
 
 Exception Exception::append_detail(const std::string &str) {
     message += ": " + str;
-    
+
     return *this;
 }
 
-Exception Exception::append_system_error(int code) {
-    if (code == -1) {
+Exception Exception::append_system_error(std::optional<int> code) {
+    if (!code) {
         code = errno;
     }
-    
-    return append_detail(strerror(code));
+
+    return append_detail(strerror(*code));
 }
 
 

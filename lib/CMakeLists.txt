@@ -2,7 +2,13 @@ add_library(foundation STATIC
         Base64.cc
         Commandline.cc
         Command.cc
+        DiagnosticOutput.cc
         Exception.cc
+        FileReader.cc
+        FileSource.cc
+        Location.cc
+        Path.cc
+        Symbol.cc
         Util.cc
 )
 
