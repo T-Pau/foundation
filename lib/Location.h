@@ -1,9 +1,7 @@
 /*
-Location.h -- Location within a File
-
 Copyright (C) Dieter Baron
 
-The authors can be contacted at <accelerate@tpau.group>
+The authors can be contacted at <foundation@tpau.group>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
@@ -29,43 +27,233 @@ OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef LOCATION_H
-#define LOCATION_H
+#ifndef HAD_FOUNDATION_LOCATION_H
+#define HAD_FOUNDATION_LOCATION_H
 
-#include <optional>
 #include <string>
 
 #include "Symbol.h"
 
+/// @brief Represents a location within a file, including the file name, line number, and column range.
 class Location {
   public:
+    /// @brief A position within a file.
+    class Position {
+      public:
+        /// @brief Create an empty position.
+        Position() = default;
+
+        /**
+         * Create a position.
+         * 
+         * @param line_number The line number, or 0 if the line number is not known.
+         * @param column The column number, or 0 if the column number is not known.
+         */
+        Position(size_t line_number, size_t column): line_number(line_number), column(column) {}
+
+        /**
+         * Check if two positions are equal.
+         * 
+         * @param other The position to compare with.
+         * @return `true` if the positions are equal, `false` otherwise.
+         */
+        bool operator==(const Position& other) const {return line_number == other.line_number && column == other.column;}
+
+        /**
+         * Check if two positions are not equal.
+         * 
+         * @param other The position to compare with.
+         * @return `true` if the positions are not equal, `false` otherwise.
+         */
+        bool operator!=(const Position& other) const {return !(*this == other);}
+
+        /**
+         * Check if this position is before another position.
+         * 
+         * @param other The position to compare with.
+         * @return `true` if this position is before the other position, `false` otherwise.
+         */
+        bool operator<(const Position& other) const;
+
+        /**
+         * Check if this position is before or equal to another position.
+         * 
+         * @param other The position to compare with.
+         * @return `true` if this position is before or equal to the other position, `false` otherwise.
+         */
+        bool operator<=(const Position& other) const {return !(*this > other);}
+
+        /**
+         * Check if this position is after another position.
+         * 
+         * @param other The position to compare with.
+         * @return `true` if this position is after the other position, `false` otherwise.
+         */
+        bool operator>(const Position& other) const;
+
+        /**
+         * Check if this position is after or equal to another position.
+         * 
+         * @param other The position to compare with.
+         * @return `true` if this position is after or equal to the other position, `false` otherwise.
+         */
+        bool operator>=(const Position& other) const {return !(*this < other);}
+
+        /**
+         * Convert the position to a string representation.
+         * 
+         * @return The string representation of the position.
+         */
+        [[nodiscard]]
+        std::string to_string() const;
+
+        /**
+         * Check if the position is empty (i.e. has no line number).
+         */
+        [[nodiscard]] bool empty() const {return line_number == 0;}
+
+        operator bool() const {return !empty();} // NOLINT(*-explicit-constructor)
+
+        /// @brief The line number, or 0 if the line number is not known.
+        size_t line_number;
+
+        /// @brief The column number, or 0 if the column number is not known.
+        size_t column;
+    };
+
+    /// @brief Empty location.
     Location() = default;
 
+    /**
+     * Create a location with only a file name.
+     * 
+     * @param file_name The name of the file.
+     */
     explicit Location(const std::string& file_name) : file(file_name) {}
 
-    Location(Symbol file, std::optional<size_t> line_number, std::optional<size_t> start_column, std::optional<size_t> end_column) : file(file), line_number(line_number), start_column(start_column), end_column(end_column) {}
+    /**
+     * Create a location.
+     * 
+     * @param file_name The name of the file.
+     * @param line_number The line number.
+     * @param start_column The starting column number, or 0 if the column number is not known.
+     * @param end_column The ending column number, or 0 if the column number is not known.
+     */
+    Location(Symbol file, size_t line_number, size_t start_column, size_t end_column) : file(file), start(line_number, start_column), end(line_number, end_column) {validate();}
 
-    Location(const Location& start, const Location& end);
+    /**
+     * Create a location with a file name, line number, and column range.
+     * 
+     * @param file The file symbol.
+     * @param start_line_number The starting line number.
+     * @param start_column The starting column number, or 0 if the column number is not known.
+     * @param end_line_number The ending line number.
+     * @param end_column The ending column number, or 0 if the column number is not known.
+     */
+    Location(Symbol file, size_t start_line_number, size_t start_column, size_t end_line_number, size_t end_column) : file(file), start(start_line_number, start_column), end(end_line_number, end_column) {validate();}
 
-    void extend(const Location& end);
+    /**
+     * Create a location that covers the range from the start of one location to the end of another location. If the two locations are in different files, the second location will be ignored.
+     * 
+     * @param a The first location.
+     * @param b The second location.
+     */
+    Location(const Location& a, const Location& b);
 
+    /**
+     * Extend the location to include another location. If the other location is not in the same file, it will be ignored.
+     */
+    void extend(const Location& other);
+
+    /**
+     * Extend the location by a number of columns.
+     * 
+     * @param amount The number of columns to extend the location by.
+     */
+    void extend(size_t amount) {end.column += amount;}
+
+    /**
+     * Check if the location is within a single line.
+     * 
+     * @return `true` if the location is within a single line, `false` otherwise.
+     */
+    [[nodiscard]] bool is_one_line() const {return start.line_number != 0 && start.line_number == end.line_number;}
+
+    /**
+     * Check if the location is empty (i.e. has no file).
+     * 
+     * @return `true` if the location is empty, `false` otherwise.
+     */
     [[nodiscard]] bool empty() const { return file.empty(); }
+
+    /**
+     * Check if two locations are equal.
+     * 
+     * @param other The location to compare with.
+     * @return `true` if the locations are equal, `false` otherwise.
+     */
     bool operator==(const Location &other) const;
 
+    /**
+     * Check if two locations are not equal.
+     */
+    bool operator!=(const Location &other) const { return !(*this == other); }
+
+    /**
+     * Check if this location is before another location.
+     * 
+     * Locations are ordered first by line number, then by column number. Locations in different files are not comparable.
+     * 
+     * @param other The location to compare with.
+     * @return `true` if this location is before the other location, `false` otherwise.
+     */
+    bool operator<(const Location &other) const;
+
+    /** 
+     * Check if this location is after another location.
+     * 
+     * Locations are ordered first by line number, then by column number. Locations in different files are not comparable.
+     * 
+     * @param other The location to compare with.
+     * @return `true` if this location is after the other location, `false` otherwise.
+     */
+    bool operator>(const Location &other) const;
+
+    /**
+     * Convert the location to a string representation of the start of the location.
+     * 
+     * @return A string representation of the start of the location.
+     */
     [[nodiscard]] std::string to_string() const;
 
+    /// @brief The file.
     Symbol file;
-    std::optional<size_t> line_number;
-    std::optional<size_t> start_column;
-    std::optional<size_t> end_column;
+
+    /// @brief The position where the location starts.
+    Position start;
+
+    /// @brief The position where the location ends.
+    Position end;
+
+  private:
+
+    /**
+     * Check that end is not before start.
+      * 
+      * @throws Exception If location is invalid.
+     */
+    void validate() const { if (end < start) throw std::runtime_error("Invalid location: end is before start"); }
 };
 
+template <> struct std::hash<Location::Position> {
+    std::size_t operator()(const Location::Position& position) const noexcept {
+        return std::hash<size_t>()(position.line_number) ^ (std::hash<size_t>()(position.column) << 1);
+    }
+};
 template <> struct std::hash<Location> {
     std::size_t operator()(const Location& location) const noexcept {
-        return std::hash<Symbol>()(location.file) ^ (std::hash<size_t>()(location.line_number.value_or(0)) << 1) ^ (std::hash<size_t>()(location.start_column.value_or(0)) << 2) ^ (std::hash<size_t>()(location.end_column.value_or(0)) << 3);
+        return std::hash<Symbol>()(location.file) ^ (std::hash<Location::Position>()(location.start) << 2) ^ (std::hash<Location::Position>()(location.end) << 4);
     }
 };
 
-std::ostream& operator<<(std::ostream& stream, const Location& location);
-
-#endif // LOCATION_H
+#endif // HAD_FOUNDATION_LOCATION_H

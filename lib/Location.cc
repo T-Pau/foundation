@@ -1,6 +1,4 @@
 /*
-Location.cc --
-
 Copyright (C) Dieter Baron
 
 The authors can be contacted at <accelerate@tpau.group>
@@ -29,40 +27,88 @@ OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include "Exception.h"
 #include "Location.h"
 
-Location::Location(const Location& start, const Location& end) : Location(start) { extend(end); }
+Location::Location(const Location& a, const Location& b) : Location(a) { extend(b); }
 
-void Location::extend(const Location& end) {
+void Location::extend(const Location& other) {
     if (empty()) {
-        *this = end;
+        *this = other;
     }
-    else if (file == end.file && line_number == end.line_number && end_column < end.end_column) {
-        end_column = end.end_column;
+    else if (file != other.file) {
+        // Ignore location from different file.
+        return;
+    }
+
+    if (other.end < start) {
+        start = other.end;
+    }
+    else if (other.end > end) {
+        end = other.end;
     }
 }
-
 
 std::string Location::to_string() const {
     if (!file) {
         return "";
     }
     auto s = file.str();
-    if (line_number) {
-        s += ":" + std::to_string(*line_number);
-        if (start_column) {
-            s += "." + std::to_string(*start_column);
-        }
+    if (start) {
+        s += ":" + start.to_string();
     }
     return s;
 }
 
 
 bool Location::operator==(const Location& other) const {
-    return file == other.file && line_number == other.line_number && start_column == other.start_column && end_column == other.end_column;
+    return file == other.file && start == other.start && end == other.end;
 }
 
-std::ostream& operator<<(std::ostream& stream, const Location& location) {
-    stream << location.to_string();
-    return stream;
+
+bool Location::operator<(const Location& other) const {
+    if (file != other.file) {
+        return false;
+    }
+    if (start != other.start) {
+        return start < other.start;
+    }
+    return end < other.end;
+}
+
+
+bool Location::operator>(const Location& other) const {
+    if (file != other.file) {
+        return false;
+    }
+    if (start != other.start) {
+        return start > other.start;
+    }
+    return end > other.end;
+}
+
+
+std::string Location::Position::to_string() const {
+    if (line_number == 0) {
+        return "";
+    }
+    auto s = std::to_string(line_number);
+    if (column > 0) {
+        s += "." + std::to_string(column);
+    }
+    return s;
+}
+
+bool Location::Position::operator<(const Position& other) const {
+    if (line_number != other.line_number) {
+        return line_number < other.line_number;
+    }
+    return column < other.column;
+}
+
+bool Location::Position::operator>(const Position& other) const {
+    if (line_number != other.line_number) {
+        return line_number > other.line_number;
+    }
+    return column > other.column;
 }
