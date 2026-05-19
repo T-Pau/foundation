@@ -30,14 +30,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Symbol.h"
 
 namespace tpau::cpp_kernal {
-#if 0
-} // fix auto-indent
-#endif
 
 Symbol::Table* Symbol::global = nullptr;
 const std::string Symbol::empty_string{};
 
-Symbol::Symbol(const std::string &name) {
+Symbol::Symbol(const std::string& name) {
     init_global();
     id = global->intern(name);
 }

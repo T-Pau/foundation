@@ -30,9 +30,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Path.h"
 
 namespace tpau::cpp_kernal {
-#if 0
-} // fix auto-indent
-#endif
 
 const Path Path::empty_path;
 
@@ -43,7 +40,7 @@ Symbol Path::find(Symbol name, Symbol base) const {
         return name;
     }
     else if (path.is_relative()) {
-        for (const auto &directory: directories) {
+        for (const auto& directory : directories) {
             auto file = directory / path;
             if (std::filesystem::exists(file)) {
                 return Symbol(file.lexically_normal().string());
@@ -62,8 +59,8 @@ Symbol Path::find(Symbol name, Symbol base) const {
 }
 
 
-void Path::append_path(const Path &path, const std::string &subdirectory) {
-    for (const auto& directory: path.directories) {
+void Path::append_path(const Path& path, const std::string& subdirectory) {
+    for (const auto& directory : path.directories) {
         if (!subdirectory.empty()) {
             append_directory(directory / subdirectory);
         }
@@ -74,8 +71,8 @@ void Path::append_path(const Path &path, const std::string &subdirectory) {
 }
 
 
-void Path::prepend_path(const Path &path, const std::string &subdirectory) {
-    for (const auto& directory: path.directories) {
+void Path::prepend_path(const Path& path, const std::string& subdirectory) {
+    for (const auto& directory : path.directories) {
         if (!subdirectory.empty()) {
             prepend_directory(directory / subdirectory);
         }

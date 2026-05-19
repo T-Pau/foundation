@@ -33,12 +33,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "FileReader.h"
 
 namespace tpau::cpp_kernal {
-#if 0
-} // fix auto-indent
-#endif
 
- FileSource::FileSource(Symbol filename): filename_(filename), lines(FileReader::global.read(filename)) {
- }
+FileSource::FileSource(Symbol filename) : filename_(filename), lines(FileReader::global.read(filename)) {}
 
 
 void FileSource::expand_location(Location& location) const {

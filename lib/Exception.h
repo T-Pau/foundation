@@ -37,43 +37,40 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "printf_like.h"
 
 namespace tpau::cpp_kernal {
-#if 0
-} // fix auto-indent
-#endif
 
 /**
  * Base class for Kernal exceptions.
  */
 class Exception : public std::exception {
-public:
+  public:
     Exception() = default;
 
     /**
      * Create an exception with the given message.
-     * 
+     *
      * @param message The message of the exception.
      */
-    explicit Exception(std::string message) : message(std::move(message)) { }
+    explicit Exception(std::string message) : message(std::move(message)) {}
 
     /**
      * Create an exception with a formatted message.
-     * 
+     *
      * @param format The format string for the message.
      * @param ... The arguments for the format string.
      */
-    explicit Exception(const char *format, ...) PRINTF_LIKE(2, 3);
+    explicit Exception(const char* format, ...) PRINTF_LIKE(2, 3);
 
     /**
      * Create a new exception with additional information appended to the message.
-     * 
+     *
      * @param str The information to append.
      * @return The exception with the appended information.
      */
-    Exception append_detail(const std::string &str);
+    Exception append_detail(const std::string& str);
 
     /**
      * Create a new exception with additional information about a system error appended to the message.
-     * 
+     *
      * @param code The error code to append. If not given, the current value of `errno` is used.
      * @return The exception with the appended information.
      */
@@ -81,12 +78,12 @@ public:
 
     /**
      * Get the message of the exception.
-     * 
+     *
      * @return The message of the exception.
      */
     [[nodiscard]] const char* what() const noexcept override;
 
-protected:
+  protected:
     /// The message of the exception.
     std::string message;
 };

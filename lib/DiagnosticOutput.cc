@@ -32,22 +32,19 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "FileReader.h"
 
 namespace tpau::cpp_kernal {
-#if 0
-} // fix auto-indent
-#endif
 
 DiagnosticOutput DiagnosticOutput::global;
 
 const char* DiagnosticOutput::diagnostics_severity_name(Severity severity) {
     switch (severity) {
-        case NOTICE:
-            return "notice";
+    case NOTICE:
+        return "notice";
 
-        case WARNING:
-            return "warning";
+    case WARNING:
+        return "warning";
 
-        case ERROR:
-            return "error";
+    case ERROR:
+        return "error";
     }
 
     throw Exception("invalid severity");
@@ -55,7 +52,7 @@ const char* DiagnosticOutput::diagnostics_severity_name(Severity severity) {
 
 DiagnosticOutput::Stream DiagnosticOutput::output(Symbol category, Severity severity, const Location& location) {
     auto output = begin_message(category, severity, location);
-    return { *this, location, diagnostics_file, output };
+    return {*this, location, diagnostics_file, output};
 }
 
 void DiagnosticOutput::output(Symbol category, Severity severity, const Location& location, const std::string& message) {
@@ -95,7 +92,8 @@ void DiagnosticOutput::end_message(const Location& location) const {
             underscore_line(line, location.start.column, width, '^');
             diagnostics_file << std::endl;
         }
-    } catch (...) {
+    }
+    catch (...) {
     }
 }
 

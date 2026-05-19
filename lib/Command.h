@@ -35,33 +35,30 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Commandline.h"
 
-#define TPAU_CPP_KERNAL_SET_DEFAULT_PACKAGE_INFO() \
-    tpau::cpp_kernal::Command::header = " -- " PACKAGE " by " PACKAGE_AUTHOR; \
+#define TPAU_CPP_KERNAL_SET_DEFAULT_PACKAGE_INFO()                               \
+    tpau::cpp_kernal::Command::header = " -- " PACKAGE " by " PACKAGE_AUTHOR;    \
     tpau::cpp_kernal::Command::footer = "Report bugs to " PACKAGE_BUGREPORT "."; \
     tpau::cpp_kernal::Command::version = VERSION
 
 namespace tpau::cpp_kernal {
-#if 0
-} // fix auto-indent
-#endif
 
 class Command {
-public:
+  public:
     Command(const std::vector<Commandline::Option>& options, std::string arguments, const std::string& name);
-    int run(int argc, char * const argv[]);
+    int run(int argc, char* const argv[]);
 
     std::string program_name;
 
-protected:
+  protected:
     virtual void process() = 0;
     virtual void create_output() = 0;
-    virtual size_t minimum_arguments() {return 0;}
-    virtual size_t maximum_arguments() {return std::numeric_limits<size_t>::max();}
+    virtual size_t minimum_arguments() { return 0; }
+    virtual size_t maximum_arguments() { return std::numeric_limits<size_t>::max(); }
 
     Commandline commandline;
     ParsedCommandline arguments;
 
-private:
+  private:
     static std::string header;
     static std::string footer;
     static std::string version;

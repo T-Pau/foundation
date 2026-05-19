@@ -34,32 +34,29 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <ostream>
 
 namespace tpau::cpp_kernal {
-#if 0
-} // fix auto-indentation
-#endif
 
 /**
  * Base class to encode data in Base64.
  */
 class Base64Encoder {
-public:
+  public:
     virtual ~Base64Encoder() = default;
 
     /**
      * Encode the given data.
-     * 
+     *
      * @param data The data to encode.
      */
     void encode(const std::string& data);
 
     /**
      * Encode the given byte.
-     * 
+     *
      * @param datum The byte to encode.
      */
     void encode(uint8_t datum);
 
-protected:
+  protected:
     /**
      * Finish the encoding process.
      */
@@ -67,12 +64,12 @@ protected:
 
     /**
      * Output a character.
-     * 
+     *
      * @param c The character to output.
      */
     virtual void output(char c) = 0;
 
-private:
+  private:
     /// Whether the encoding process has been finished.
     bool ended{false};
 
@@ -84,7 +81,7 @@ private:
 
     /**
      * Return the Base64 character corresponding to the given value.
-     * 
+     *
      * @param value The value to convert. Must be between 0 and 63.
      * @return The corresponding Base64 character.
      * @throws Exception if the value is out of range.
@@ -93,7 +90,7 @@ private:
 
     /**
      * Output the Base64 character corresponding to the given value.
-     * 
+     *
      * @param value The value to convert and output. Must be between 0 and 63.
      * @throws Exception if the value is out of range.
      */
@@ -103,45 +100,48 @@ private:
 /**
  * Class to encode data in Base64 into a string.
  */
-class Base64StringEncoder: public Base64Encoder {
-public:
+class Base64StringEncoder : public Base64Encoder {
+  public:
     /**
      * Finish the encoding process and return the encoded data.
-     * 
+     *
      * @return The encoded data.
      */
-    std::string end() {finish(); return encoded_data;}
+    std::string end() {
+        finish();
+        return encoded_data;
+    }
 
-protected:
-    void output(char c) override {encoded_data += c;}
+  protected:
+    void output(char c) override { encoded_data += c; }
 
-private:
+  private:
     std::string encoded_data;
 };
 
 /**
  * Class to encode data in Base64 to a stream.
  */
-class Base64StreamEncoder: public Base64Encoder {
-public:
+class Base64StreamEncoder : public Base64Encoder {
+  public:
     /**
      * Create a Base64StreamEncoder.
-     * 
+     *
      * @param stream The output stream.
      * @param line_length The maximum line length.
      * @param indent The number of spaces to indent continuation lines.
      */
-    Base64StreamEncoder(std::ostream& stream, size_t line_length = 0, size_t indent = 0): stream{stream}, line_length{line_length}, indent{std::string(indent, ' ')} {}
+    Base64StreamEncoder(std::ostream& stream, size_t line_length = 0, size_t indent = 0) : stream{stream}, line_length{line_length}, indent{std::string(indent, ' ')} {}
 
     /**
      * Finish the encoding process.
      */
-    void end() {finish();}
+    void end() { finish(); }
 
-protected:
+  protected:
     void output(char c) override;
 
-private:
+  private:
     /// The output stream to encode to.
     std::ostream& stream;
 
@@ -159,29 +159,29 @@ private:
  * Class to decode data from Base64.
  */
 class Base64Decoder {
-public:
+  public:
     /**
      * Decode the given data.
-     * 
+     *
      * @param data The data to decode. Whitespace characters are ignored.
      */
     void decode(const std::string& data);
 
     /**
      * Decode the given character.
-     * 
+     *
      * @param character The character to decode. Whitespace characters are ignored.
      */
     void decode(char character);
 
     /**
      * Finish the decoding process and return the decoded data.
-     * 
+     *
      * @return The decoded data.
      */
     const std::string& end() const;
 
-private:
+  private:
     /// The decoded data.
     std::string decoded_string;
 
@@ -196,7 +196,7 @@ private:
 
     /**
      * Return the value corresponding to the given Base64 character.
-     * 
+     *
      * @param character The Base64 character.
      * @return The corresponding value.
      * @throws Exception if the character is invalid.

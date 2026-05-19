@@ -37,9 +37,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Exception.h"
 
 namespace tpau::cpp_kernal {
-#if 0
-} // fix auto-indent
-#endif
 
 FileReader FileReader::global;
 
@@ -86,11 +83,11 @@ std::string FileReader::read_binary(Symbol file_name, bool optional) {
 }
 
 
-const std::string &FileReader::get_line(Symbol file, size_t line_number) const {
+const std::string& FileReader::get_line(Symbol file, size_t line_number) const {
     const auto it = files.find(file);
 
     if (it == files.end()) {
-        throw Exception("unknown file '%s'",file.c_str());
+        throw Exception("unknown file '%s'", file.c_str());
     }
 
     if (line_number == 0 || line_number > it->second.size()) {
@@ -101,14 +98,13 @@ const std::string &FileReader::get_line(Symbol file, size_t line_number) const {
 }
 
 
-
 std::vector<Symbol> FileReader::file_names() const {
     auto file_names = std::vector<Symbol>();
 
-    for (const auto& name: std::views::keys(files)) {
+    for (const auto& name : std::views::keys(files)) {
         file_names.emplace_back(name);
     }
-    for (const auto& name: binary_files) {
+    for (const auto& name : binary_files) {
         file_names.emplace_back(name);
     }
 
@@ -118,4 +114,3 @@ std::vector<Symbol> FileReader::file_names() const {
 }
 
 } // namespace tpau::cpp_kernal
-

@@ -36,9 +36,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Symbol.h"
 
 namespace tpau::cpp_kernal {
-#if 0
-} // fix auto-indent
-#endif
 
 class FileSource {
   public:
@@ -49,7 +46,7 @@ class FileSource {
 
     [[nodiscard]] Symbol filename() const { return filename_; }
 
-    [[nodiscard]] Location location() const { return { filename(), line + 1, column, column }; }
+    [[nodiscard]] Location location() const { return {filename(), line + 1, column, column}; }
 
     void expand_location(Location& location) const;
 
@@ -62,7 +59,7 @@ class FileSource {
     size_t column{0};
 };
 
-  } // namespace tpau::cpp_kernal
+} // namespace tpau::cpp_kernal
 
 
 #endif // HAD_TPAU_CPP_KERNAL_FILE_SOURCE_H

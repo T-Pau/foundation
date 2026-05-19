@@ -35,35 +35,32 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string>
 #include <vector>
 
-#include "printf_like.h"
 #include "Symbol.h"
+#include "printf_like.h"
 
 namespace tpau::cpp_kernal {
-#if 0
-} // fix auto-indent
-#endif
 
 /**
  * Format a string using `printf`-style formatting.
- * 
+ *
  * @param format The format string.
  * @param ... The arguments to format.
  * @return The formatted string.
  */
-std::string string_format(const char *format, ...) PRINTF_LIKE(1, 2);
+std::string string_format(const char* format, ...) PRINTF_LIKE(1, 2);
 
 /**
  * Format a string using `printf`-style formatting with a `va_list`.
- * 
+ *
  * @param format The format string.
  * @param ap The arguments to format.
  * @return The formatted string.
  */
-std::string string_format_v(const char *format, va_list ap);
+std::string string_format_v(const char* format, va_list ap);
 
 /**
  * Join a vector of symbols into a string with a separator between the symbols.
- * 
+ *
  * @param symbols The symbols to join.
  * @param separator The separator to use between the symbols. (default: ", ")
  * @return The joined string.
@@ -72,7 +69,7 @@ std::string join(const std::vector<Symbol>& symbols, const std::string& separato
 
 /**
  * Replace the extension of a file name with a new extension.
- * 
+ *
  * @param file_name The file name to replace the extension of.
  * @param extension The new extension to use.
  * @return The file name with the replaced extension.

@@ -40,19 +40,15 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Exception.h"
 
 namespace tpau::cpp_kernal {
-#if 0
-} // fix auto-indent
-#endif
 
 std::string Command::header = "";
 std::string Command::footer = "";
 std::string Command::version = "";
 
-Command::Command(const std::vector<Commandline::Option>& options, std::string arguments, const std::string& name): commandline(options, std::move(arguments), name + header, footer, version) {
-}
+Command::Command(const std::vector<Commandline::Option>& options, std::string arguments, const std::string& name) : commandline(options, std::move(arguments), name + header, footer, version) {}
 
 
-int Command::run(int argc, char *const *argv) {
+int Command::run(int argc, char* const* argv) {
     try {
         program_name = argv[0];
         arguments = commandline.parse(argc, argv);

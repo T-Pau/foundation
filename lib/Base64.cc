@@ -32,9 +32,6 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Exception.h"
 
 namespace tpau::cpp_kernal {
-#if 0
-} // fix auto-indentation
-#endif
 
 void Base64Encoder::encode(const std::string& data) {
     for (const auto datum : data) {
@@ -49,23 +46,23 @@ void Base64Encoder::encode(uint8_t datum) {
 
     uint8_t value;
     switch (position) {
-        case 0:
-            value = datum >> 2;
-            remaining_bits = (datum & 0x3) << 4;
-            break;
+    case 0:
+        value = datum >> 2;
+        remaining_bits = (datum & 0x3) << 4;
+        break;
 
-        case 1:
-            value = remaining_bits | (datum >> 4);
-            remaining_bits = (datum & 0xf) << 2;
-            break;
+    case 1:
+        value = remaining_bits | (datum >> 4);
+        remaining_bits = (datum & 0xf) << 2;
+        break;
 
-        case 2:
-            value = remaining_bits | (datum >> 6);
-            remaining_bits = datum & 0x3f;
-            break;
+    case 2:
+        value = remaining_bits | (datum >> 6);
+        remaining_bits = datum & 0x3f;
+        break;
 
-        default:
-            throw Exception("internal error: invalid position in Base64Encoder");
+    default:
+        throw Exception("internal error: invalid position in Base64Encoder");
     }
 
     add(value);
@@ -77,22 +74,22 @@ void Base64Encoder::encode(uint8_t datum) {
 
 void Base64Encoder::finish() {
     switch (position) {
-        case 0:
-            break;
+    case 0:
+        break;
 
-        case 1:
-            add(remaining_bits);
-            add('=');
-            add('=');
-            break;
+    case 1:
+        add(remaining_bits);
+        add('=');
+        add('=');
+        break;
 
-        case 2:
-            add(remaining_bits);
-            add('=');
-            break;
+    case 2:
+        add(remaining_bits);
+        add('=');
+        break;
 
-        default:
-            throw Exception("internal error: invalid position in Base64Encoder");
+    default:
+        throw Exception("internal error: invalid position in Base64Encoder");
     }
 
     ended = true;
@@ -167,26 +164,26 @@ void Base64Decoder::decode(char character) {
     uint8_t value{};
 
     switch (position) {
-        case 0:
-            remaining_bits = datum << 2;
-            break;
+    case 0:
+        remaining_bits = datum << 2;
+        break;
 
-        case 1:
-            value = remaining_bits | (datum >> 4);
-            remaining_bits = (datum & 0xf) << 4;
-            break;
+    case 1:
+        value = remaining_bits | (datum >> 4);
+        remaining_bits = (datum & 0xf) << 4;
+        break;
 
-        case 2:
-            value = remaining_bits | (datum >> 2);
-            remaining_bits = (datum & 0x3) << 6;
-            break;
+    case 2:
+        value = remaining_bits | (datum >> 2);
+        remaining_bits = (datum & 0x3) << 6;
+        break;
 
-        case 3:
-            value = remaining_bits | datum;
-            break;
+    case 3:
+        value = remaining_bits | datum;
+        break;
 
-        default:
-            throw Exception("internal error: invalid position in Base64Decoder");
+    default:
+        throw Exception("internal error: invalid position in Base64Decoder");
     }
 
     if (position != 0) {

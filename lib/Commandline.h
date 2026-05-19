@@ -42,45 +42,45 @@ namespace tpau::cpp_kernal {
 #endif
 
 class ParsedCommandline {
-public:
+  public:
     class OptionValue {
-    public:
-        OptionValue(std::string name_, std::string argument_) : name(std::move(name_)), argument(std::move(argument_)) { }
-        
+      public:
+        OptionValue(std::string name_, std::string argument_) : name(std::move(name_)), argument(std::move(argument_)) {}
+
         std::string name;
         std::string argument; // empty string for options without argument
     };
 
-    [[nodiscard]] std::optional<std::string> find_first(const std::string &name) const;
-    [[maybe_unused]] [[nodiscard]] std::optional<std::string> find_last(const std::string &name) const;
+    [[nodiscard]] std::optional<std::string> find_first(const std::string& name) const;
+    [[maybe_unused]] [[nodiscard]] std::optional<std::string> find_last(const std::string& name) const;
 
-    void add_argument(std::string name) {arguments.emplace_back(std::move(name));}
-    void add_option(std::string name, std::string argument) {options.emplace_back(std::move(name), std::move(argument));}
+    void add_argument(std::string name) { arguments.emplace_back(std::move(name)); }
+    void add_option(std::string name, std::string argument) { options.emplace_back(std::move(name), std::move(argument)); }
 
     std::vector<OptionValue> options;
     std::vector<std::string> arguments;
 };
 
 class Commandline {
-public:
+  public:
     class Option {
-    public:
-        Option(std::string name_, char short_name_, std::string argument_name_, std::string description_) : name(std::move(name_)), short_name(short_name_), argument_name(std::move(argument_name_)), description(std::move(description_)) { }
-        Option(std::string name_, std::string argument_name_, std::string description_) : name(std::move(name_)), argument_name(std::move(argument_name_)), description(std::move(description_)) { }
-        Option(std::string name_, char short_name_, std::string description_) : name(std::move(name_)), short_name(short_name_), description(std::move(description_)) { }
-        Option(std::string name_, std::string description_) : name(std::move(name_)), description(std::move(description_)) { }
+      public:
+        Option(std::string name_, char short_name_, std::string argument_name_, std::string description_) : name(std::move(name_)), short_name(short_name_), argument_name(std::move(argument_name_)), description(std::move(description_)) {}
+        Option(std::string name_, std::string argument_name_, std::string description_) : name(std::move(name_)), argument_name(std::move(argument_name_)), description(std::move(description_)) {}
+        Option(std::string name_, char short_name_, std::string description_) : name(std::move(name_)), short_name(short_name_), description(std::move(description_)) {}
+        Option(std::string name_, std::string description_) : name(std::move(name_)), description(std::move(description_)) {}
 
-        
+
         std::string name;
         std::optional<char> short_name;
         std::string argument_name;
         std::string description;
 
         [[nodiscard]] bool has_argument() const { return !argument_name.empty(); }
-        
-        bool operator <(const Option &other) const;
+
+        bool operator<(const Option& other) const;
     };
-    
+
     Commandline(std::vector<Option> options, std::string arguments, std::string header, std::string footer, std::string version);
 
     void add_option(Option option);
@@ -92,11 +92,11 @@ public:
     std::string footer;
     std::string version;
 
-    ParsedCommandline parse(int argc, char * const argv[]);
-    
-    void usage(bool full = false, FILE *fout = stdout);
+    ParsedCommandline parse(int argc, char* const argv[]);
 
-private:
+    void usage(bool full = false, FILE* fout = stdout);
+
+  private:
     bool options_sorted;
 
     void sort_options();

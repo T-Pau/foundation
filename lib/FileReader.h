@@ -38,12 +38,9 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Symbol.h"
 
 namespace tpau::cpp_kernal {
-#if 0
-} // fix auto-indent
-#endif
 
 class FileReader {
-public:
+  public:
     const std::vector<std::string>& read(Symbol file_name, bool optional = false);
     [[nodiscard]] std::string read_binary(Symbol file_name, bool optional = false);
 
@@ -52,11 +49,11 @@ public:
 
     static FileReader global;
 
-private:
+  private:
     static std::vector<std::string> empty_file;
 
     std::unordered_set<Symbol> binary_files;
-    std::unordered_map<Symbol,std::vector<std::string>> files;
+    std::unordered_map<Symbol, std::vector<std::string>> files;
 };
 
 } // namespace tpau::cpp_kernal

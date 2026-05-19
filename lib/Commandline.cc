@@ -31,15 +31,12 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <algorithm>
 #include <cctype>
-#include <sstream>
 #include <iostream>
+#include <sstream>
 #include <unordered_map>
 #include <utility>
 
 namespace tpau::cpp_kernal {
-#if 0
-} // fix auto-indentation
-#endif
 
 Commandline::Commandline(std::vector<Option> options_, std::string arguments_, std::string header_, std::string footer_, std::string version_) : options(std::move(options_)), arguments(std::move(arguments_)), header(std::move(header_)), footer(std::move(footer_)), version(std::move(version_)), options_sorted(false) {
     add_option(Option("help", 'h', "display this help message"));
@@ -47,13 +44,13 @@ Commandline::Commandline(std::vector<Option> options_, std::string arguments_, s
 }
 
 
-ParsedCommandline Commandline::parse(int argc, char *const *argv) {
+ParsedCommandline Commandline::parse(int argc, char* const* argv) {
     program_name = argv[0];
 
     std::unordered_map<char, const Option*> short_options;
     std::unordered_map<std::string, const Option*> long_options;
 
-    for (const auto& option: options) {
+    for (const auto& option : options) {
         if (option.short_name) {
             short_options[*option.short_name] = &option;
         }
@@ -156,36 +153,36 @@ ParsedCommandline Commandline::parse(int argc, char *const *argv) {
 }
 
 
-std::optional<std::string> ParsedCommandline::find_first(const std::string &name) const {
-    for (const auto &option : options) {
+std::optional<std::string> ParsedCommandline::find_first(const std::string& name) const {
+    for (const auto& option : options) {
         if (option.name == name) {
             return option.argument;
         }
     }
-    
+
     return {};
 }
 
-[[maybe_unused]] std::optional<std::string> ParsedCommandline::find_last(const std::string &name) const {
+[[maybe_unused]] std::optional<std::string> ParsedCommandline::find_last(const std::string& name) const {
     for (auto it = options.rbegin(); it != options.rend(); it++) {
-        const auto &option = *it;
+        const auto& option = *it;
 
         if (option.name == name) {
             return option.argument;
         }
     }
-    
+
     return {};
 }
 
 
-void Commandline::usage(bool full, FILE *fout) {
+void Commandline::usage(bool full, FILE* fout) {
     std::stringstream short_options_without_argument;
     std::stringstream short_options_with_argument;
 
     sort_options();
 
-    for (const auto &option : options) {
+    for (const auto& option : options) {
         if (option.short_name.has_value()) {
             if (option.has_argument()) {
                 short_options_with_argument << " [-" << option.short_name.value() << " " << option.argument_name << "]";
@@ -195,7 +192,7 @@ void Commandline::usage(bool full, FILE *fout) {
             }
         }
     }
-    
+
     if (full) {
         fprintf(fout, "%s\n\n", header.c_str());
     }
@@ -216,7 +213,7 @@ void Commandline::usage(bool full, FILE *fout) {
         fprintf(fout, "\n");
 
         size_t max_length = 0;
-        for (const auto &option : options) {
+        for (const auto& option : options) {
             size_t length = 8 + option.name.length();
             if (option.has_argument()) {
                 length += option.argument_name.length() + 1;
@@ -225,7 +222,7 @@ void Commandline::usage(bool full, FILE *fout) {
                 max_length = length;
             }
         }
-        for (const auto &option : options) {
+        for (const auto& option : options) {
             if (option.short_name.has_value()) {
                 fprintf(fout, "  -%c, ", option.short_name.value());
             }
@@ -244,28 +241,26 @@ void Commandline::usage(bool full, FILE *fout) {
             }
             fprintf(fout, "  %s\n", option.description.c_str());
         }
-        
+
         fprintf(fout, "\n%s\n", footer.c_str());
     }
 }
 
 
-void Commandline::add_option(Commandline::Option option) {
-    options.push_back(std::move(option));
-}
+void Commandline::add_option(Commandline::Option option) { options.push_back(std::move(option)); }
 
 
 void Commandline::sort_options() {
     if (!options_sorted) {
-	std::sort(options.begin(), options.end());
-	options_sorted = true;
+        std::sort(options.begin(), options.end());
+        options_sorted = true;
     }
 }
 
 
 static int compare_char(char a, char b) {
     auto cmp = std::tolower(a) - std::tolower(b);
-    
+
     if (cmp != 0) {
         return cmp;
     }
@@ -275,7 +270,7 @@ static int compare_char(char a, char b) {
 }
 
 
-bool Commandline::Option::operator<(const Option &other) const {
+bool Commandline::Option::operator<(const Option& other) const {
     if (short_name.has_value()) {
         if (other.short_name.has_value()) {
             return compare_char(short_name.value(), other.short_name.value()) < 0;

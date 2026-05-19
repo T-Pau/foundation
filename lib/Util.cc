@@ -33,11 +33,8 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <filesystem>
 
 namespace tpau::cpp_kernal {
-#if 0
-} // fix auto-indent
-#endif
 
-std::string string_format(const char *format, ...) {
+std::string string_format(const char* format, ...) {
     va_list ap;
     va_start(ap, format);
     auto string = string_format_v(format, ap);
@@ -46,14 +43,14 @@ std::string string_format(const char *format, ...) {
 }
 
 
-std::string string_format_v(const char *format, va_list ap) {
+std::string string_format_v(const char* format, va_list ap) {
     auto size = strlen(format) + 50;
     std::string str;
     va_list ap2;
     while (true) {
         str.resize(size);
         va_copy(ap2, ap);
-        int n = vsnprintf((char *)str.data(), size, format, ap2);
+        int n = vsnprintf((char*)str.data(), size, format, ap2);
         va_end(ap2);
         if (n > -1 && static_cast<size_t>(n) < size) {
             str.resize(static_cast<size_t>(n));
@@ -69,16 +66,14 @@ std::string string_format_v(const char *format, va_list ap) {
 }
 
 
-std::filesystem::path replace_extension(const std::filesystem::path& file_name, const std::string& extension) {
-    return  file_name.parent_path() / (file_name.stem().string( ) +  "." + extension);
-}
+std::filesystem::path replace_extension(const std::filesystem::path& file_name, const std::string& extension) { return file_name.parent_path() / (file_name.stem().string() + "." + extension); }
 
 
 std::string join(const std::vector<Symbol>& symbols, const std::string& separator) {
     auto s = std::string();
     auto first = true;
 
-    for (auto& symbol: symbols) {
+    for (auto& symbol : symbols) {
         if (first) {
             first = false;
         }

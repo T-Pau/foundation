@@ -38,82 +38,78 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <unordered_set>
 
 namespace tpau::cpp_kernal {
-#if 0
-} // fix auto-indent
-#endif
 
 class DiagnosticOutput {
   public:
     enum Severity { NOTICE, WARNING, ERROR };
 
-  class Stream : public std::ostream {
-  private:
-    class Buffer : public std::streambuf {
-    public:
-      explicit Buffer(std::ostream& stream, bool output) : stream(stream), output(output) {}
+    class Stream : public std::ostream {
+      private:
+        class Buffer : public std::streambuf {
+          public:
+            explicit Buffer(std::ostream& stream, bool output) : stream(stream), output(output) {}
 
-      int_type overflow(int_type ch) override {
-        if (output && ch != EOF) {
-          stream.put(static_cast<char>(ch));
-        }
-        return ch;
-      }
+            int_type overflow(int_type ch) override {
+                if (output && ch != EOF) {
+                    stream.put(static_cast<char>(ch));
+                }
+                return ch;
+            }
 
-      std::streamsize xsputn(const char_type* s, std::streamsize n) override {
-        if (output && n > 0) {
-          stream.write(s, n);
-        }
-        return n;
-      }
+            std::streamsize xsputn(const char_type* s, std::streamsize n) override {
+                if (output && n > 0) {
+                    stream.write(s, n);
+                }
+                return n;
+            }
 
-      int sync() override {
-        if (output) {
-          stream.flush();
-        }
-        return 1; // TODO: correct?
-      }
+            int sync() override {
+                if (output) {
+                    stream.flush();
+                }
+                return 1; // TODO: correct?
+            }
 
-      std::ostream& stream;
-      bool output;
+            std::ostream& stream;
+            bool output;
+        };
+
+      public:
+        Stream(DiagnosticOutput& diagnostic_output, const Location& location, std::ostream& stream, bool output) : std::ostream(&buffer), diagnostic_output(diagnostic_output), buffer(stream, output), location(location), output(output) {}
+        ~Stream() override;
+
+        const Location& location;
+        bool output;
+        Buffer buffer;
+        DiagnosticOutput& diagnostic_output;
     };
-
-  public:
-    Stream(DiagnosticOutput& diagnostic_output, const Location& location, std::ostream& stream, bool output): std::ostream(&buffer), diagnostic_output(diagnostic_output), buffer(stream, output), location(location), output(output) {}
-    ~Stream() override;
-
-    const Location& location;
-    bool output;
-    Buffer buffer;
-    DiagnosticOutput& diagnostic_output;
-  };
 
     void register_category(Symbol category, Severity severity);
 
-    Stream notice(Symbol category, const Location& location) {return output(category, NOTICE, location);}
-    void notice(Symbol category, const Location& location, const std::string& message) {output(category, NOTICE, location, message);}
-    Stream warning(Symbol category, const Location& location) {return output(category, WARNING, location);}
-    void warning(Symbol category, const Location& location, const std::string& message) {output(category, WARNING, location, message);}
-    Stream error(Symbol category, const Location& location) {return output(category, ERROR, location);}
-    void error(Symbol category, const Location& location, const std::string& message) {output(category, ERROR, location, message);}
+    Stream notice(Symbol category, const Location& location) { return output(category, NOTICE, location); }
+    void notice(Symbol category, const Location& location, const std::string& message) { output(category, NOTICE, location, message); }
+    Stream warning(Symbol category, const Location& location) { return output(category, WARNING, location); }
+    void warning(Symbol category, const Location& location, const std::string& message) { output(category, WARNING, location, message); }
+    Stream error(Symbol category, const Location& location) { return output(category, ERROR, location); }
+    void error(Symbol category, const Location& location, const std::string& message) { output(category, ERROR, location, message); }
     Stream output(Symbol category, Severity severity, const Location& location);
     void output(Symbol category, Severity severity, const Location& location, const std::string& message);
 
     [[nodiscard]] bool failed() const { return fail_flag; }
 
-    bool verbose_error_messages{ false };
+    bool verbose_error_messages{false};
 
     static DiagnosticOutput global;
 
   private:
-
     bool begin_message(Symbol category, Severity severity, const Location& location);
     void end_message(const Location& location) const;
 
     /**
      * Output a character under part of a line of source code.
-     * 
+     *
      * It assumes that the line of source code has already been output, and the cursor is at start_column of the next line.
-     * 
+     *
      * @param line The line of source code to output.
      * @param start_column The column to start at.
      * @param width The number of columns to underline.
@@ -129,6 +125,6 @@ class DiagnosticOutput {
     std::ostream& diagnostics_file{std::cerr};
 };
 
-  } // namespace tpau::cpp_kernal
+} // namespace tpau::cpp_kernal
 
 #endif // HAD_TPAU_CPP_KERNAL_DIAGNOSTIC_OUTPUT_H

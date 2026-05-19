@@ -27,13 +27,11 @@ OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include "Exception.h"
 #include "Location.h"
 
+#include "Exception.h"
+
 namespace tpau::cpp_kernal {
-#if 0
-} // fix auto-indent
-#endif
 
 Location::Location(const Location& a, const Location& b) : Location(a) { extend(b); }
 
@@ -66,9 +64,14 @@ std::string Location::to_string() const {
 }
 
 
-bool Location::operator==(const Location& other) const {
-    return file == other.file && start == other.start && end == other.end;
+void Location::validate() const {
+    if (end < start) {
+        throw std::runtime_error("Invalid location: end is before start");
+    }
 }
+
+
+bool Location::operator==(const Location& other) const { return file == other.file && start == other.start && end == other.end; }
 
 
 bool Location::operator<(const Location& other) const {
