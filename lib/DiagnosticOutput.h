@@ -37,6 +37,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include <unordered_set>
 
+namespace tpau::cpp_kernal {
+#if 0
+} // fix auto-indent
+#endif
+
 class DiagnosticOutput {
   public:
     enum Severity { NOTICE, WARNING, ERROR };
@@ -104,6 +109,18 @@ class DiagnosticOutput {
     bool begin_message(Symbol category, Severity severity, const Location& location);
     void end_message(const Location& location) const;
 
+    /**
+     * Output a character under part of a line of source code.
+     * 
+     * It assumes that the line of source code has already been output, and the cursor is at start_column of the next line.
+     * 
+     * @param line The line of source code to output.
+     * @param start_column The column to start at.
+     * @param width The number of columns to underline.
+     * @param underline_char The character to use.
+     */
+    void underscore_line(const std::string& line, size_t start_column, size_t width, char underline_char) const;
+
     static const char* diagnostics_severity_name(Severity severity);
 
     std::unordered_set<Symbol> ignored_categories;
@@ -112,5 +129,6 @@ class DiagnosticOutput {
     std::ostream& diagnostics_file{std::cerr};
 };
 
+  } // namespace tpau::cpp_kernal
 
 #endif // HAD_TPAU_CPP_KERNAL_DIAGNOSTIC_OUTPUT_H

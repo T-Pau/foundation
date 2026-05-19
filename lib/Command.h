@@ -35,6 +35,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Commandline.h"
 
+#define TPAU_CPP_KERNAL_SET_DEFAULT_PACKAGE_INFO() \
+    tpau::cpp_kernal::Command::header = " -- " PACKAGE " by " PACKAGE_AUTHOR; \
+    tpau::cpp_kernal::Command::footer = "Report bugs to " PACKAGE_BUGREPORT "."; \
+    tpau::cpp_kernal::Command::version = VERSION
+
 namespace tpau::cpp_kernal {
 #if 0
 } // fix auto-indent

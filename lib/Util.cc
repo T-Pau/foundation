@@ -32,6 +32,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <cstring>
 #include <filesystem>
 
+namespace tpau::cpp_kernal {
+#if 0
+} // fix auto-indent
+#endif
+
 std::string string_format(const char *format, ...) {
     va_list ap;
     va_start(ap, format);
@@ -85,3 +90,5 @@ std::string join(const std::vector<Symbol>& symbols, const std::string& separato
 
     return s;
 }
+
+} // namespace tpau::cpp_kernal

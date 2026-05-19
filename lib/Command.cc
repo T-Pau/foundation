@@ -44,9 +44,9 @@ namespace tpau::cpp_kernal {
 } // fix auto-indent
 #endif
 
-std::string Command::header = " -- " PACKAGE " by " PACKAGE_AUTHOR;
-std::string Command::footer = "Report bugs to " PACKAGE_BUGREPORT ".";
-std::string Command::version = VERSION;
+std::string Command::header = "";
+std::string Command::footer = "";
+std::string Command::version = "";
 
 Command::Command(const std::vector<Commandline::Option>& options, std::string arguments, const std::string& name): commandline(options, std::move(arguments), name + header, footer, version) {
 }

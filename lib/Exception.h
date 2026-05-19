@@ -36,6 +36,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "printf_like.h"
 
+namespace tpau::cpp_kernal {
+#if 0
+} // fix auto-indent
+#endif
+
 /**
  * Base class for Kernal exceptions.
  */
@@ -85,5 +90,7 @@ protected:
     /// The message of the exception.
     std::string message;
 };
+
+} // namespace tpau::cpp_kernal
 
 #endif // HAD_TPAU_CPP_KERNAL_EXCEPTION_H

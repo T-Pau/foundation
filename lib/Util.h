@@ -38,6 +38,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "printf_like.h"
 #include "Symbol.h"
 
+namespace tpau::cpp_kernal {
+#if 0
+} // fix auto-indent
+#endif
+
 /**
  * Format a string using `printf`-style formatting.
  * 
@@ -73,5 +78,7 @@ std::string join(const std::vector<Symbol>& symbols, const std::string& separato
  * @return The file name with the replaced extension.
  */
 std::filesystem::path replace_extension(const std::filesystem::path& file_name, const std::string& extension);
+
+} // namespace tpau::cpp_kernal
 
 #endif // HAD_TPAU_CPP_KERNAL_UTIL_H

@@ -29,6 +29,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Path.h"
 
+namespace tpau::cpp_kernal {
+#if 0
+} // fix auto-indent
+#endif
+
 const Path Path::empty_path;
 
 Symbol Path::find(Symbol name, Symbol base) const {
@@ -79,3 +84,5 @@ void Path::prepend_path(const Path &path, const std::string &subdirectory) {
         }
     }
 }
+
+} // namespace tpau::cpp_kernal

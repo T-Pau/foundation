@@ -35,6 +35,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Location.h"
 #include "Symbol.h"
 
+namespace tpau::cpp_kernal {
+#if 0
+} // fix auto-indent
+#endif
+
 class FileSource {
   public:
     FileSource(Symbol filename);
@@ -56,6 +61,8 @@ class FileSource {
     size_t line{0};
     size_t column{0};
 };
+
+  } // namespace tpau::cpp_kernal
 
 
 #endif // HAD_TPAU_CPP_KERNAL_FILE_SOURCE_H

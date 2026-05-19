@@ -36,6 +36,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Symbol.h"
 
+namespace tpau::cpp_kernal {
+#if 0
+} // fix auto-indent
+#endif
+
 
 /// Class representing a search path for files, consisting of a list of directories to search in.
 class Path {
@@ -93,6 +98,8 @@ private:
     /// @brief The directories in the search path, in order of precedence.
     std::vector<std::filesystem::path> directories;
 };
+
+} // namespace tpau::cpp_kernal
 
 
 #endif // HAD_TPAU_CPP_KERNAL_PATH_H

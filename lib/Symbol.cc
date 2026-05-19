@@ -29,6 +29,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Symbol.h"
 
+namespace tpau::cpp_kernal {
+#if 0
+} // fix auto-indent
+#endif
+
 Symbol::Table* Symbol::global = nullptr;
 const std::string Symbol::empty_string{};
 
@@ -44,7 +49,7 @@ Symbol& Symbol::operator=(const std::string& name) {
 
 
 std::ostream& operator<<(std::ostream& stream, const Symbol& symbol) {
-    stream << symbol.c_str();
+    stream << symbol.str();
     return stream;
 }
 
@@ -68,3 +73,5 @@ const std::string* Symbol::Table::intern(const std::string& string) {
         return it->second.get();
     }
 }
+
+} // namespace tpau::cpp_kernal

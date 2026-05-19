@@ -36,6 +36,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <unordered_map>
 #include <vector>
 
+namespace tpau::cpp_kernal {
+#if 0
+} // fix auto-indent
+#endif
+
 class SymbolTable;
 
 /// @brief Class for hashing string pointers.
@@ -178,13 +183,6 @@ public:
     static Table *global;
 };
 
-template<>
-struct std::hash<Symbol>
-{
-    std::size_t operator()(Symbol const& symbol) const noexcept {
-        return std::hash<const char*>{}(symbol.c_str());
-    }
-};
 
 /**
  * Output a symbol to a stream.
@@ -194,5 +192,15 @@ struct std::hash<Symbol>
  * @return The stream that was output to.
  */
 std::ostream& operator<<(std::ostream& stream, const Symbol& symbol);
+
+} // namespace tpau::cpp_kernal
+
+template<>
+struct std::hash<tpau::cpp_kernal::Symbol>
+{
+    std::size_t operator()(tpau::cpp_kernal::Symbol const& symbol) const noexcept {
+        return std::hash<const char*>{}(symbol.c_str());
+    }
+};
 
 #endif // HAD_TPAU_CPP_KERNAL_SYMBOL_H

@@ -36,6 +36,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Exception.h"
 
+namespace tpau::cpp_kernal {
+#if 0
+} // fix auto-indent
+#endif
+
 FileReader FileReader::global;
 
 std::vector<std::string> FileReader::empty_file;
@@ -111,4 +116,6 @@ std::vector<Symbol> FileReader::file_names() const {
 
     return file_names;
 }
+
+} // namespace tpau::cpp_kernal
 

@@ -37,6 +37,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Symbol.h"
 
+namespace tpau::cpp_kernal {
+#if 0
+} // fix auto-indent
+#endif
+
 class FileReader {
 public:
     const std::vector<std::string>& read(Symbol file_name, bool optional = false);
@@ -53,6 +58,8 @@ private:
     std::unordered_set<Symbol> binary_files;
     std::unordered_map<Symbol,std::vector<std::string>> files;
 };
+
+} // namespace tpau::cpp_kernal
 
 
 #endif // HAD_TPAU_CPP_KERNAL_FILE_READER_H

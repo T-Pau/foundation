@@ -31,6 +31,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "FileReader.h"
 
+namespace tpau::cpp_kernal {
+#if 0
+} // fix auto-indent
+#endif
+
 DiagnosticOutput DiagnosticOutput::global;
 
 const char* DiagnosticOutput::diagnostics_severity_name(Severity severity) {
@@ -76,44 +81,36 @@ bool DiagnosticOutput::begin_message(Symbol category, Severity severity, const L
 }
 
 void DiagnosticOutput::end_message(const Location& location) const {
-    if (location.empty() && !location.line_number) {
+    if (location.empty() || location.start.empty()) {
         return;
     }
 
     try {
-        const auto& line = FileReader::global.get_line(location.file, *location.line_number);
+        const auto& line = FileReader::global.get_line(location.file, location.start.line_number);
         diagnostics_file << line << std::endl;
 
-        if (location.start_column) {
-            auto width = size_t{1};
-            if (location.end_column && location.end_column > location.start_column) {
-                width = *location.end_column - *location.start_column;
-            }
-
-            size_t position = 0;
-            for (size_t i = 0; i < location.start_column; i++) {
-                diagnostics_file << ' ';
-                position += 1;
-                if (line[i] == '\t') {
-                    while (position % 8 != 0) {
-                        diagnostics_file << ' ';
-                        position += 1;
-                    }
-                }
-            }
-            for (size_t i = 0; i < width; i++) {
-                diagnostics_file << '^';
-                position += 1;
-                if (line[i] == '\t') {
-                    while (position % 8 != 0) {
-                        diagnostics_file << '^';
-                        position += 1;
-                    }
-                }
-            }
+        auto width = location.width();
+        if (width > 0) {
+            underscore_line(line, 0, location.start.column, ' ');
+            underscore_line(line, location.start.column, width, '^');
             diagnostics_file << std::endl;
         }
     } catch (...) {
+    }
+}
+
+void DiagnosticOutput::underscore_line(const std::string& line, size_t start_column, size_t width, char underline_char) const {
+    auto end_column = start_column + width;
+    auto position = start_column;
+    while (position < end_column && position < line.size()) {
+        diagnostics_file << underline_char;
+        position += 1;
+        if (line[position] == '\t') {
+            while (position % 8 != 0) {
+                diagnostics_file << underline_char;
+                position += 1;
+            }
+        }
     }
 }
 
@@ -121,3 +118,5 @@ DiagnosticOutput::Stream::~Stream() {
     *this << std::endl;
     diagnostic_output.end_message(location);
 }
+
+} // namespace tpau::cpp_kernal

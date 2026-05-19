@@ -32,13 +32,18 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Exception.h"
 #include "FileReader.h"
 
+namespace tpau::cpp_kernal {
+#if 0
+} // fix auto-indent
+#endif
+
  FileSource::FileSource(Symbol filename): filename_(filename), lines(FileReader::global.read(filename)) {
  }
 
 
 void FileSource::expand_location(Location& location) const {
-    if (location.file == filename() && location.line_number == line) {
-        location.end_column = column;
+    if (location.file == filename()) {
+        location.end = Location::Position(line + 1, column + 1);
     }
 }
 
@@ -63,8 +68,8 @@ void FileSource::reset_to(const Location& new_location) {
     if (new_location.file != filename()) {
         throw Exception("Can't reset to location in different file.");
     }
-    line = new_location.line_number.value_or(1) - 1;
-    column = new_location.start_column.value_or(0);
+    line = new_location.start.line_index();
+    column = new_location.start.column_index();
 }
 
 
@@ -84,3 +89,5 @@ void FileSource::unget() {
         column -= 1;
     }
 }
+
+} // namespace tpau::cpp_kernal

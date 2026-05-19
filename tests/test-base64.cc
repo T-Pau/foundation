@@ -4,8 +4,8 @@
 
 
 TEST_CASE( "Base64 encoding and decoding", "[base64]" ) {
-    Base64Encoder encoder;
+    tpau::cpp_kernal::Base64StringEncoder encoder;
     encoder.encode("Hello, World!");
-    encoder.finish();
-    REQUIRE( encoder.str() == "SGVsbG8sIFdvcmxkIQ==" );
+    auto result = encoder.end();
+    REQUIRE( result == "SGVsbG8sIFdvcmxkIQ==" );
 }

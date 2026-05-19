@@ -30,6 +30,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "Exception.h"
 #include "Location.h"
 
+namespace tpau::cpp_kernal {
+#if 0
+} // fix auto-indent
+#endif
+
 Location::Location(const Location& a, const Location& b) : Location(a) { extend(b); }
 
 void Location::extend(const Location& other) {
@@ -112,3 +117,17 @@ bool Location::Position::operator>(const Position& other) const {
     }
     return column > other.column;
 }
+
+std::ostream& operator<<(std::ostream& os, const Location& location) {
+    os << location.to_string();
+    return os;
+}
+
+size_t Location::width() const {
+    if (!is_one_line() || start.column == 0 || end.column == 0) {
+        return 0;
+    }
+    return end.column - start.column;
+}
+
+} // namespace tpau::cpp_kernal

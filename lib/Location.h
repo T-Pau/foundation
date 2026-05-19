@@ -34,10 +34,23 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Symbol.h"
 
-/// @brief Represents a location within a file, including the file name, line number, and column range.
+namespace tpau::cpp_kernal {
+#if 0
+} // fix auto-indent
+#endif
+
+/**
+ * Represents a location within a file, including the file name, start position, and end position.
+ * 
+ * Line and column numbers are 1-based, and `0` indicates that it is not specified.
+ */
 class Location {
   public:
-    /// @brief A position within a file.
+    /**
+     * A position within a file.
+     * 
+     * Line and column numbers are 1-based, and `0` indicates that it is not specified.
+     */ 
     class Position {
       public:
         /// @brief Create an empty position.
@@ -46,8 +59,8 @@ class Location {
         /**
          * Create a position.
          * 
-         * @param line_number The line number, or 0 if the line number is not known.
-         * @param column The column number, or 0 if the column number is not known.
+         * @param line_number The line number, or `0` if the line number is not specified.
+         * @param column The column number, or `0` if the column number is not specified.
          */
         Position(size_t line_number, size_t column): line_number(line_number), column(column) {}
 
@@ -114,10 +127,24 @@ class Location {
 
         operator bool() const {return !empty();} // NOLINT(*-explicit-constructor)
 
-        /// @brief The line number, or 0 if the line number is not known.
+        /**
+         * Get the 0-based line index of the position. If the line number is not specified, `0` is returned.
+         * 
+         * @return The 0-based line index of the position, or `0` if the line number is not specified.
+         */
+        size_t line_index() const {return line_number > 0 ? line_number - 1 : 0;}
+
+        /**
+         * Get the 0-based column index of the position. If the column number is not specified, `0` is returned.
+         * 
+         * @return The 0-based column index of the position, or `0` if the column number is not specified.
+         */
+        size_t column_index() const {return column > 0 ? column - 1 : 0;}
+
+        /// @brief The line number, or `0` if the line number is not specified.
         size_t line_number;
 
-        /// @brief The column number, or 0 if the column number is not known.
+        /// @brief The column number, or `0` if the column number is not specified.
         size_t column;
     };
 
@@ -135,9 +162,9 @@ class Location {
      * Create a location.
      * 
      * @param file_name The name of the file.
-     * @param line_number The line number.
-     * @param start_column The starting column number, or 0 if the column number is not known.
-     * @param end_column The ending column number, or 0 if the column number is not known.
+     * @param line_number The line number, or `0` if the line number is not specified.
+     * @param start_column The starting column number, or `0` if the column number is not specified.
+     * @param end_column The ending column number, or `0` if the column number is not specified.
      */
     Location(Symbol file, size_t line_number, size_t start_column, size_t end_column) : file(file), start(line_number, start_column), end(line_number, end_column) {validate();}
 
@@ -145,10 +172,10 @@ class Location {
      * Create a location with a file name, line number, and column range.
      * 
      * @param file The file symbol.
-     * @param start_line_number The starting line number.
-     * @param start_column The starting column number, or 0 if the column number is not known.
-     * @param end_line_number The ending line number.
-     * @param end_column The ending column number, or 0 if the column number is not known.
+     * @param start_line_number The starting line number, or `0` if the line number is not specified.
+     * @param start_column The starting column number, or `0` if the column number is not specified.
+     * @param end_line_number The ending line number, or `0` if the line number is not specified.
+     * @param end_column The ending column number, or `0` if the column number is not specified.
      */
     Location(Symbol file, size_t start_line_number, size_t start_column, size_t end_line_number, size_t end_column) : file(file), start(start_line_number, start_column), end(end_line_number, end_column) {validate();}
 
@@ -178,6 +205,15 @@ class Location {
      * @return `true` if the location is within a single line, `false` otherwise.
      */
     [[nodiscard]] bool is_one_line() const {return start.line_number != 0 && start.line_number == end.line_number;}
+
+    /**
+     * Get the width of the location in columns.
+     * 
+     * If the location is not on a single line, or no start or end column is known, `0` is returned.
+     * 
+     * @return The width of the location in columns, or `0` if it is not well defined.
+     */
+    [[nodiscard]] size_t width() const;
 
     /**
      * Check if the location is empty (i.e. has no file).
@@ -245,14 +281,26 @@ class Location {
     void validate() const { if (end < start) throw std::runtime_error("Invalid location: end is before start"); }
 };
 
-template <> struct std::hash<Location::Position> {
-    std::size_t operator()(const Location::Position& position) const noexcept {
+
+/**
+ * Output location to a stream.
+ * 
+ * @param os The stream to output to.
+ * @param location The location to output.
+ * @return The stream after outputting the location.
+ */
+std::ostream& operator<<(std::ostream& os, const Location& location);
+
+} // namespace tpau::cpp_kernal
+
+template <> struct std::hash<tpau::cpp_kernal::Location::Position> {
+    std::size_t operator()(const tpau::cpp_kernal::Location::Position& position) const noexcept {
         return std::hash<size_t>()(position.line_number) ^ (std::hash<size_t>()(position.column) << 1);
     }
 };
-template <> struct std::hash<Location> {
-    std::size_t operator()(const Location& location) const noexcept {
-        return std::hash<Symbol>()(location.file) ^ (std::hash<Location::Position>()(location.start) << 2) ^ (std::hash<Location::Position>()(location.end) << 4);
+template <> struct std::hash<tpau::cpp_kernal::Location> {
+    std::size_t operator()(const tpau::cpp_kernal::Location& location) const noexcept {
+      return std::hash<tpau::cpp_kernal::Symbol>()(location.file) ^ (std::hash<tpau::cpp_kernal::Location::Position>()(location.start) << 2) ^ (std::hash<tpau::cpp_kernal::Location::Position>()(location.end) << 4);
     }
 };
 
