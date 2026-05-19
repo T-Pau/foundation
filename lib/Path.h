@@ -11,8 +11,8 @@ are met:
    notice, this list of conditions and the following disclaimer.
 
 2. The names of the authors may not be used to endorse or promote
-  products derived from this software without specific prior
-  written permission.
+   products derived from this software without specific prior
+   written permission.
 
 THIS SOFTWARE IS PROVIDED BY THE AUTHORS "AS IS" AND ANY EXPRESS
 OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
