@@ -1,8 +1,10 @@
 # T'Pau C++ Kernal
 
-Kernal is a C++ library collecting various classes and functions that are used in other T'Pau projects. It is meant to be included as a Git submodule.  
+Kernal is a C++ library collecting various classes and functions that are used in other T'Pau projects.
 
 ## Using C++ Kernal
+
+**This information is outdated. Proper documentation will be provided when cmake files for integrating the library are available.**
 
 To use this library in another cmake project, add the following lines to the top level `CMakeLists.txt`:
 
@@ -33,4 +35,4 @@ target_link_libraries(${PROGRAM} tpau-cpp-kernal)
 
 Kernal is written in C++20.
 
-To build it, you need a C++20 compiler and [cmake](https://cmake.org). To run the tests, you need [Python](https://www.python.org) and [nihtest](https://github.com/nih-at/nihtest).
+To build it, you need a C++20 compiler and [cmake](https://cmake.org). To run the tests, you need [Catch2](https://github.com/catchorg/Catch2).

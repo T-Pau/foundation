@@ -79,13 +79,13 @@ void Base64Encoder::finish() {
 
     case 1:
         add(remaining_bits);
-        add('=');
-        add('=');
+        output('=');
+        output('=');
         break;
 
     case 2:
         add(remaining_bits);
-        add('=');
+        output('=');
         break;
 
     default:
@@ -96,10 +96,10 @@ void Base64Encoder::finish() {
 }
 
 char Base64Encoder::character(uint8_t value) {
-    if (value <= 26) {
+    if (value < 26) {
         return static_cast<char>('A' + value);
     }
-    else if (value <= 52) {
+    else if (value < 52) {
         return static_cast<char>('a' + value - 26);
     }
     else if (value < 62) {
@@ -122,7 +122,7 @@ void Base64Encoder::add(uint8_t value) {
 }
 
 void Base64StreamEncoder::output(char c) {
-    if (line_position >= line_length) {
+    if (line_length != 0 && line_position >= line_length) {
         stream << std::endl << indent;
         line_position = 0;
     }

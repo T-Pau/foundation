@@ -128,7 +128,7 @@ class Base64StreamEncoder : public Base64Encoder {
      * Create a Base64StreamEncoder.
      *
      * @param stream The output stream.
-     * @param line_length The maximum line length.
+     * @param line_length The maximum line length, `0` for no limit.
      * @param indent The number of spaces to indent continuation lines.
      */
     Base64StreamEncoder(std::ostream& stream, size_t line_length = 0, size_t indent = 0) : stream{stream}, line_length{line_length}, indent{std::string(indent, ' ')} {}
