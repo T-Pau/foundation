@@ -1,4 +1,4 @@
-add_library(foundation STATIC
+add_library(tpau-cpp-kernal
         Base64.cc
         Commandline.cc
         Command.cc
@@ -12,5 +12,10 @@ add_library(foundation STATIC
         Util.cc
 )
 
-target_include_directories(foundation PRIVATE ${PROJECT_BINARY_DIR})
+target_include_directories(tpau-cpp-kernal PRIVATE ${PROJECT_BINARY_DIR})
 
+install(TARGETS tpau-cpp-kernal
+        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+        INCLUDES DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)

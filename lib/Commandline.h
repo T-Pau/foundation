@@ -1,11 +1,11 @@
 
-#ifndef HAD_FOUNDATION_COMMANDLINE_H
-#define HAD_FOUNDATION_COMMANDLINE_H
+#ifndef HAD_TPAU_CPP_KERNAL_COMMANDLINE_H
+#define HAD_TPAU_CPP_KERNAL_COMMANDLINE_H
 
 /*
 Copyright (C) Dieter Baron and Thomas Klausner
 
-The authors can be contacted at <foundation@tpau.group>
+The authors can be contacted at <tpau-cpp-kernal@tpau.group>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
@@ -35,6 +35,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <string>
 #include <utility>
 #include <vector>
+
+namespace tpau::cpp_kernal {
+#if 0  
+} // fix auto-indentation
+#endif
 
 class ParsedCommandline {
 public:
@@ -97,4 +102,6 @@ private:
     void sort_options();
 };
 
-#endif // HAD_FOUNDATION_COMMANDLINE_H
+} // namespace tpau::cpp_kernal
+
+#endif // HAD_TPAU_CPP_KERNAL_COMMANDLINE_H

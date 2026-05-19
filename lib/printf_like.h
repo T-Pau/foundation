@@ -1,10 +1,10 @@
-#ifndef HAD_FOUNDATION_PRINTF_LIKE_H
-#define HAD_FOUNDATION_PRINTF_LIKE_H
+#ifndef HAD_TPAU_CPP_KERNAL_PRINTF_LIKE_H
+#define HAD_TPAU_CPP_KERNAL_PRINTF_LIKE_H
 
 /*
 Copyright (C) Dieter Baron and Thomas Klausner
 
-The authors can be contacted at <foundation@tpau.group>
+The authors can be contacted at <tpau-cpp-kernal@tpau.group>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
@@ -36,4 +36,4 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define PRINTF_LIKE(n, m)
 #endif
 
-#endif // HAD_FOUNDATION_PRINTF_LIKE_H
+#endif // HAD_TPAU_CPP_KERNAL_PRINTF_LIKE_H

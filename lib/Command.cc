@@ -1,7 +1,7 @@
 /*
 Copyright (C) Dieter Baron
 
-The authors can be contacted at <foundation@tpau.group>
+The authors can be contacted at <tpau-cpp-kernal@tpau.group>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
@@ -39,6 +39,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "Exception.h"
 
+namespace tpau::cpp_kernal {
+#if 0
+} // fix auto-indent
+#endif
+
 std::string Command::header = " -- " PACKAGE " by " PACKAGE_AUTHOR;
 std::string Command::footer = "Report bugs to " PACKAGE_BUGREPORT ".";
 std::string Command::version = VERSION;
@@ -69,3 +74,5 @@ int Command::run(int argc, char *const *argv) {
 
     return 0;
 }
+
+} // namespace tpau::cpp_kernal

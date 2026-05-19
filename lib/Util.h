@@ -1,10 +1,10 @@
-#ifndef HAD_FOUNDATION_UTIL_H
-#define HAD_FOUNDATION_UTIL_H
+#ifndef HAD_TPAU_CPP_KERNAL_UTIL_H
+#define HAD_TPAU_CPP_KERNAL_UTIL_H
 
 /*
 Copyright (C) Dieter Baron
 
-The authors can be contacted at <foundation@tpau.group>
+The authors can be contacted at <tpau-cpp-kernal@tpau.group>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
@@ -74,4 +74,4 @@ std::string join(const std::vector<Symbol>& symbols, const std::string& separato
  */
 std::filesystem::path replace_extension(const std::filesystem::path& file_name, const std::string& extension);
 
-#endif // HAD_FOUNDATION_UTIL_H
+#endif // HAD_TPAU_CPP_KERNAL_UTIL_H

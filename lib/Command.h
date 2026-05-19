@@ -1,7 +1,7 @@
 /*
 Copyright (C) Dieter Baron
 
-The authors can be contacted at <foundation@tpau.group>
+The authors can be contacted at <tpau-cpp-kernal@tpau.group>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
@@ -27,13 +27,18 @@ OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef HAD_FOUNDATION_COMMAND_H
-#define HAD_FOUNDATION_COMMAND_H
+#ifndef HAD_TPAU_CPP_KERNAL_COMMAND_H
+#define HAD_TPAU_CPP_KERNAL_COMMAND_H
 
 #include <limits>
 #include <string>
 
 #include "Commandline.h"
+
+namespace tpau::cpp_kernal {
+#if 0
+} // fix auto-indent
+#endif
 
 class Command {
 public:
@@ -57,5 +62,6 @@ private:
     static std::string version;
 };
 
+} // namespace tpau::cpp_kernal
 
-#endif // HAD_FOUNDATION_COMMAND_H
+#endif // HAD_TPAU_CPP_KERNAL_COMMAND_H

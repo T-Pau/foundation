@@ -1,7 +1,7 @@
 /*
 Copyright (C) Dieter Baron
 
-The authors can be contacted at <foundation@tpau.group>
+The authors can be contacted at <tpau-cpp-kernal@tpau.group>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
@@ -27,8 +27,8 @@ OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef HAD_FOUNDATION_LOCATION_H
-#define HAD_FOUNDATION_LOCATION_H
+#ifndef HAD_TPAU_CPP_KERNAL_LOCATION_H
+#define HAD_TPAU_CPP_KERNAL_LOCATION_H
 
 #include <string>
 
@@ -256,4 +256,4 @@ template <> struct std::hash<Location> {
     }
 };
 
-#endif // HAD_FOUNDATION_LOCATION_H
+#endif // HAD_TPAU_CPP_KERNAL_LOCATION_H

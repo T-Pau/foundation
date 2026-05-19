@@ -1,7 +1,7 @@
 /*
 Copyright (C) Dieter Baron
 
-The authors can be contacted at <foundation@tpau.group>
+The authors can be contacted at <tpau-cpp-kernal@tpau.group>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
@@ -27,11 +27,16 @@ OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef HAD_FOUNDATION_BASE64_H
-#define HAD_FOUNDATION_BASE64_H
+#ifndef HAD_TPAU_CPP_KERNAL_BASE64_H
+#define HAD_TPAU_CPP_KERNAL_BASE64_H
 
 #include <cstdint>
 #include <ostream>
+
+namespace tpau::cpp_kernal {
+#if 0
+} // fix auto-indentation
+#endif
 
 /**
  * Base class to encode data in Base64.
@@ -199,4 +204,6 @@ private:
     static uint8_t value(char character);
 };
 
-#endif // HAD_FOUNDATION_BASE64_H
+} // namespace tpau::cpp_kernal
+
+#endif // HAD_TPAU_CPP_KERNAL_BASE64_H

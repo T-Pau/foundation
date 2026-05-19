@@ -1,10 +1,10 @@
-#ifndef HAD_FOUNDATION_FILE_SOURCE_H
-#define HAD_FOUNDATION_FILE_SOURCE_H
+#ifndef HAD_TPAU_CPP_KERNAL_FILE_SOURCE_H
+#define HAD_TPAU_CPP_KERNAL_FILE_SOURCE_H
 
 /*
 Copyright (C) Dieter Baron
 
-The authors can be contacted at <foundation@tpau.group>
+The authors can be contacted at <tpau-cpp-kernal@tpau.group>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
@@ -58,4 +58,4 @@ class FileSource {
 };
 
 
-#endif // HAD_FOUNDATION_FILE_SOURCE_H
+#endif // HAD_TPAU_CPP_KERNAL_FILE_SOURCE_H

@@ -1,10 +1,10 @@
-#ifndef HAD_FOUNDATION_EXCEPTION_H
-#define HAD_FOUNDATION_EXCEPTION_H
+#ifndef HAD_TPAU_CPP_KERNAL_EXCEPTION_H
+#define HAD_TPAU_CPP_KERNAL_EXCEPTION_H
 
 /*
 Copyright (C) Dieter Baron and Thomas Klausner
 
-The authors can be contacted at <foundation@tpau.group>
+The authors can be contacted at <tpau-cpp-kernal@tpau.group>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
@@ -37,7 +37,7 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "printf_like.h"
 
 /**
- * Base class for foundation exceptions.
+ * Base class for Kernal exceptions.
  */
 class Exception : public std::exception {
 public:
@@ -86,4 +86,4 @@ protected:
     std::string message;
 };
 
-#endif // HAD_FOUNDATION_EXCEPTION_H
+#endif // HAD_TPAU_CPP_KERNAL_EXCEPTION_H

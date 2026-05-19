@@ -1,7 +1,7 @@
 /*
 Copyright (C) Dieter Baron and Thomas Klausner
 
-The authors can be contacted at <foundation@tpau.group>
+The authors can be contacted at <tpau-cpp-kernal@tpau.group>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
@@ -35,6 +35,11 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <iostream>
 #include <unordered_map>
 #include <utility>
+
+namespace tpau::cpp_kernal {
+#if 0
+} // fix auto-indentation
+#endif
 
 Commandline::Commandline(std::vector<Option> options_, std::string arguments_, std::string header_, std::string footer_, std::string version_) : options(std::move(options_)), arguments(std::move(arguments_)), header(std::move(header_)), footer(std::move(footer_)), version(std::move(version_)), options_sorted(false) {
     add_option(Option("help", 'h', "display this help message"));
@@ -288,3 +293,5 @@ bool Commandline::Option::operator<(const Option &other) const {
         }
     }
 }
+
+} // namespace tpau::cpp_kernal
