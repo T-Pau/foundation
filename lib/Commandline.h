@@ -1,6 +1,6 @@
 
-#ifndef HAD_COMMANDLINE_H
-#define HAD_COMMANDLINE_H
+#ifndef HAD_FOUNDATION_COMMANDLINE_H
+#define HAD_FOUNDATION_COMMANDLINE_H
 
 /*
 Copyright (C) Dieter Baron and Thomas Klausner
@@ -97,4 +97,4 @@ private:
     void sort_options();
 };
 
-#endif // HAD_COMMANDLINE_H
+#endif // HAD_FOUNDATION_COMMANDLINE_H

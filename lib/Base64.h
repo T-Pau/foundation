@@ -27,8 +27,8 @@ OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
 IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
-#ifndef BASE64_H
-#define BASE64_H
+#ifndef HAD_FOUNDATION_BASE64_H
+#define HAD_FOUNDATION_BASE64_H
 
 #include <cstdint>
 #include <ostream>
@@ -199,4 +199,4 @@ private:
     static uint8_t value(char character);
 };
 
-#endif //BASE64_H
+#endif // HAD_FOUNDATION_BASE64_H

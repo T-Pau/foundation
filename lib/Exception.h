@@ -1,5 +1,5 @@
-#ifndef EXCEPTION_H
-#define EXCEPTION_H
+#ifndef HAD_FOUNDATION_EXCEPTION_H
+#define HAD_FOUNDATION_EXCEPTION_H
 
 /*
 Copyright (C) Dieter Baron and Thomas Klausner
@@ -86,4 +86,4 @@ protected:
     std::string message;
 };
 
-#endif // EXCEPTION_H
+#endif // HAD_FOUNDATION_EXCEPTION_H

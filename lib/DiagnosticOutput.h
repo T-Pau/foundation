@@ -1,5 +1,5 @@
-#ifndef DIAGNOSTICOUTPUT_H
-#define DIAGNOSTICOUTPUT_H
+#ifndef HAD_FOUNDATION_DIAGNOSTIC_OUTPUT_H
+#define HAD_FOUNDATION_DIAGNOSTIC_OUTPUT_H
 
 /*
 Copyright (C) Dieter Baron
@@ -113,4 +113,4 @@ class DiagnosticOutput {
 };
 
 
-#endif // DIAGNOSTICOUTPUT_H
+#endif // HAD_FOUNDATION_DIAGNOSTIC_OUTPUT_H

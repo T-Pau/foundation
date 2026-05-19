@@ -1,5 +1,5 @@
-#ifndef HAD_PRINTF_LIKE_H
-#define HAD_PRINTF_LIKE_H
+#ifndef HAD_FOUNDATION_PRINTF_LIKE_H
+#define HAD_FOUNDATION_PRINTF_LIKE_H
 
 /*
 Copyright (C) Dieter Baron and Thomas Klausner
@@ -36,4 +36,4 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #define PRINTF_LIKE(n, m)
 #endif
 
-#endif // HAD_PRINTF_LIKE_H
+#endif // HAD_FOUNDATION_PRINTF_LIKE_H

@@ -1,5 +1,5 @@
-#ifndef FILESOURCE_H
-#define FILESOURCE_H
+#ifndef HAD_FOUNDATION_FILE_SOURCE_H
+#define HAD_FOUNDATION_FILE_SOURCE_H
 
 /*
 Copyright (C) Dieter Baron
@@ -58,4 +58,4 @@ class FileSource {
 };
 
 
-#endif // FILESOURCE_H
+#endif // HAD_FOUNDATION_FILE_SOURCE_H
