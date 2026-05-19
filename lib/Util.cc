@@ -69,3 +69,21 @@ std::string string_format_v(const char *format, va_list ap) {
 std::filesystem::path replace_extension(const std::filesystem::path& file_name, const std::string& extension) {
     return  file_name.parent_path() / (file_name.stem().string( ) +  "." + extension);
 }
+
+
+std::string join(const std::vector<Symbol>& symbols, const std::string& separator) {
+    auto s = std::string();
+    auto first = true;
+
+    for (auto& symbol: symbols) {
+        if (first) {
+            first = false;
+        }
+        else {
+            s += separator;
+        }
+        s += symbol.str();
+    }
+
+    return s;
+}

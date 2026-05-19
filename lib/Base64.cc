@@ -1,6 +1,4 @@
 /*
-Base64.cc --
-
 Copyright (C) Dieter Baron
 
 The authors can be contacted at <assembler@tpau.group>
@@ -42,7 +40,7 @@ void Base64Encoder::encode(const std::string& data) {
 
 void Base64Encoder::encode(uint8_t datum) {
     if (ended) {
-        throw Exception("can't encode data to finished enocder");
+        throw Exception("can't encode data to finished encoder");
     }
 
     uint8_t value;
@@ -132,26 +130,36 @@ void Base64StreamEncoder::output(char c) {
     line_position += 1;
 }
 
-void Base64Deocder::decode(const std::string& data) {
+void Base64Decoder::decode(const std::string& data) {
     for (const auto character : data) {
         decode(character);
     }
 }
 
-void Base64Deocder::decode(char character) {
+void Base64Decoder::decode(char character) {
     if (character == ' ' || character == '\t' || character == '\n' || character == '\r') {
         return;
     }
 
     if (character == '=') {
+        if (position == 0) {
+            if (ended) {
+                throw Exception("garbage after end marker in base64 data");
+            }
+            else {
+                throw Exception("unexpected end marker in base64 data");
+            }
+        }
         ended = true;
+        position = (position + 1) % 4;
+        return;
     }
 
     if (ended) {
         throw Exception("garbage after end marker in base64 data");
     }
 
-    const uint8_t datum = value(character);
+    const auto datum = value(character);
     uint8_t value{};
 
     switch (position) {
@@ -183,14 +191,14 @@ void Base64Deocder::decode(char character) {
     position = (position + 1) % 4;
 }
 
-const std::string& Base64Deocder::end() const {
+const std::string& Base64Decoder::end() const {
     if (!ended && position != 0) {
         throw Exception("incomplete base64 data");
     }
     return decoded_string;
 }
 
-uint8_t Base64Deocder::value(char character) {
+uint8_t Base64Decoder::value(char character) {
     if (character >= 'A' && character <= 'Z') {
         return character - 'A';
     }

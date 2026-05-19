@@ -1,12 +1,12 @@
-#ifndef UTIL_H
-#define UTIL_H
+#ifndef HAD_FOUNDATION_UTIL_H
+#define HAD_FOUNDATION_UTIL_H
 
 /*
 Util.h -- utility functions
 
 Copyright (C) Dieter Baron
 
-The authors can be contacted at <accelerate@tpau.group>
+The authors can be contacted at <foundation@tpau.group>
 
 Redistribution and use in source and binary forms, with or without
 modification, are permitted provided that the following conditions
@@ -35,12 +35,45 @@ IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include <cstdarg>
 #include <filesystem>
 #include <string>
+#include <vector>
 
 #include "printf_like.h"
+#include "Symbol.h"
 
+/**
+ * Format a string using `printf`-style formatting.
+ * 
+ * @param format The format string.
+ * @param ... The arguments to format.
+ * @return The formatted string.
+ */
 std::string string_format(const char *format, ...) PRINTF_LIKE(1, 2);
+
+/**
+ * Format a string using `printf`-style formatting with a `va_list`.
+ * 
+ * @param format The format string.
+ * @param ap The arguments to format.
+ * @return The formatted string.
+ */
 std::string string_format_v(const char *format, va_list ap);
 
+/**
+ * Join a vector of symbols into a string with a separator between the symbols.
+ * 
+ * @param symbols The symbols to join.
+ * @param separator The separator to use between the symbols. (default: ", ")
+ * @return The joined string.
+ */
+std::string join(const std::vector<Symbol>& symbols, const std::string& separator = ", ");
+
+/**
+ * Replace the extension of a file name with a new extension.
+ * 
+ * @param file_name The file name to replace the extension of.
+ * @param extension The new extension to use.
+ * @return The file name with the replaced extension.
+ */
 std::filesystem::path replace_extension(const std::filesystem::path& file_name, const std::string& extension);
 
-#endif // UTIL_H
+#endif // HAD_FOUNDATION_UTIL_H
