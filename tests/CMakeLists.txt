@@ -2,6 +2,7 @@ include(Catch)
 
 set(TEST_PROGRAMS
     test-base64
+    test-symbol
 )
 
 foreach(test_program IN LISTS TEST_PROGRAMS)
